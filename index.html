@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - Random Quote Machine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/css/bootstrap.css'>
+      <style>
+      .main-box {
+  border: 3px solid black;
+  padding: 10px;
+  margin: 50px;
+}
+    </style>
+</head>
+
+<body translate="no" >
+
+  <div class=" container fluid">
+  <div class="main-box">
+    <h1 class="text-center">Quote:</h1>
+    <div id="message" class="col-xs-12 well">
+    </div>
+    <div class="col">
+      <button id="quoteButton" class="btn">New Quote</button>
+    </div>
+    <span class="col"></span>
+    <div class="col">
+      <button id="twitterButton" class="btn"><a href="#" onclick="return popitup()"
+	>Tweet</a></button>
+    </div>
+  </div>
+</div>
+  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+
+    <script >
+      text="";
+
+$(document).ready(function() {
+  getData();
+  $("#quoteButton").on("click", function() {
+    getData();
+  });
+});
+
+function popitup() {
+  var url = "https://twitter.com/intent/tweet?text=";
+  newwindow = window.open(url + text, "name", "height=300,width=600");
+  if (window.focus) {
+    newwindow.focus();
+  }
+  return false;
+}
+
+function getData() {
+  $.getJSON("https://talaikis.com/api/quotes/random/", function(data) {
+    $("#message").html(data.quote + "<p>--" + data.author);
+    text = '"' + data.quote + '" --' + data.author;
+  });
+}
+    </script>
+    
+</body>
+</html>
